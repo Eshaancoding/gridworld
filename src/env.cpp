@@ -12,13 +12,15 @@ void frame :: print() {
 } 
 
 Env :: Env () {
-	this->playerPosX = 1; // Starts at 1
-	this->playerPosY = 4; // Starts at 1
+	this->playerPosX = 1; 
+	this->playerPosY = 4; 
 }
 
 frame Env :: step (int action) {
+	static int i = 0;
+	i++;
 	frame return_frame; 
-	
+	return_frame.done = false;	
 	// store state in frame 
 	return_frame.state[0] = this->playerPosX;
 	return_frame.state[1] = this->playerPosY; 
@@ -47,11 +49,23 @@ frame Env :: step (int action) {
 	// update next_state
 	return_frame.next_state[0] = this->playerPosX;
 	return_frame.next_state[1] = this->playerPosY;	
+
+	if (i >= 100) {
+		i = 0; 
+		return_frame.reward = -2;
+		return_frame.done = true;	
+		// reset player position.
+		this->playerPosX = 1; 
+		this->playerPosY = 4;
+	}	
 	
 	// determine reward
 	if (this->playerPosX == 8 && this->playerPosY == 4) {
 		return_frame.reward = 1;
 		return_frame.done = true;	
+		// reset player position.
+		this->playerPosX = 1; 
+		this->playerPosY = 4; 
 	}
 	else return_frame.reward = -1;
 	

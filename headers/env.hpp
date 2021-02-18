@@ -4,7 +4,7 @@ using namespace std;
 
 class frame {
 public:
-	int reward;
+	double reward;
 	int state[2]; // playerPosX, playerPosY
 	int action; // 1 = up, 2 = down, 3 = left, 4 = right
 	int next_state[2]; // playerPosX, playerPosY
