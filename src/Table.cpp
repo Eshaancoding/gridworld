@@ -28,3 +28,25 @@ void TwoDimTable :: add (vector<double> input_one, vector<double> input_two, vec
 	this->inputTwo.push_back(input_two);
 	this->outputOne.push_back(output_one);
 }
+
+string TwoDimTable :: print_data () {
+	string return_data;
+	return_data += "Print table: \n";
+	for (int i = 0; i < this->inputTwo.size(); i++) {
+		return_data += "InputOne: ";
+		for (auto x : this->inputOne[i]) {
+			return_data += to_string(x) + " ";
+		}		
+		return_data += "| InputTwo: ";
+		for (auto x : this->inputTwo[i]) {
+			return_data += to_string(x) + " ";
+		}
+		return_data += "| Output: ";
+		for (auto x : this->outputOne[i]) {
+			return_data += to_string(x) + " "; 
+		}
+		return_data += "\n";
+	} 
+	return_data += "Print table done \n";
+	return return_data;
+}

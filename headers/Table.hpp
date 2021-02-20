@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <limits>
 using namespace std;
 
 class TwoDimTable {
@@ -11,4 +13,5 @@ public:
 	void add (vector<double> input_one, vector<double> input_two, vector<double> output_one);  
 	vector<double> get (vector<double> input_one, vector<double> input_two);
 	void set (vector<double> input_one, vector<double> input_two, vector<double> output_one);
+	string print_data ();
 };

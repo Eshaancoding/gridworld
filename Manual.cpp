@@ -21,22 +21,22 @@ int main () {
 			break;
 		}
 		else if (key == KEY_DOWN) {
-			frame fr = env.step(2);
+			frame fr = env.step(1);
 			next_state = {double(fr.next_state[0]), double(fr.next_state[1])}; 
 			reward = fr.reward;
 		} 
 		else if (key == KEY_UP) {
-			frame fr = env.step(1);
+			frame fr = env.step(0);
 			next_state = {double(fr.next_state[0]), double(fr.next_state[1])}; 
 			reward = fr.reward;
 		}
 		else if (key == KEY_RIGHT) {
-			frame fr = env.step(4);
+			frame fr = env.step(3);
 			next_state = {double(fr.next_state[0]), double(fr.next_state[1])}; 
 			reward = fr.reward;
 		}
 		else if (key == KEY_LEFT) {
-			frame fr = env.step(3); 
+			frame fr = env.step(2); 
 			next_state = {double(fr.next_state[0]), double(fr.next_state[1])}; 
 			reward = fr.reward;
 		}

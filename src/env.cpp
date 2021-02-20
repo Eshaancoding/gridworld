@@ -17,8 +17,6 @@ Env :: Env () {
 }
 
 frame Env :: step (int action) {
-	static int i = 0;
-	i++;
 	frame return_frame; 
 	return_frame.done = false;	
 	// store state in frame 
@@ -29,16 +27,16 @@ frame Env :: step (int action) {
 	return_frame.action = action;
 	
 	// execute action
-	if (action == 1) this->playerPosY += 1;
-	if (action == 2) this->playerPosY -= 1;
-	if (action == 3) this->playerPosX -= 1;
-	if (action == 4) this->playerPosX += 1; 
+	if (action == 0) this->playerPosY += 1;
+	if (action == 1) this->playerPosY -= 1;
+	if (action == 2) this->playerPosX -= 1;
+	if (action == 3) this->playerPosX += 1; 
 
 	// if player is in the wind zone, playerPosY increases
 	if (this->playerPosX == 4 || this->playerPosX == 5 || this->playerPosX == 6 || this->playerPosX == 9) 
 		this->playerPosY += 1;
 	if (this->playerPosX == 7 || this->playerPosX == 8) 
-		this->playerPosY += 2;	
+	 	this->playerPosY += 2;	
 
 	// check if player is out of bounds
 	if (this->playerPosX > 10) this->playerPosX = 10; 
@@ -49,15 +47,6 @@ frame Env :: step (int action) {
 	// update next_state
 	return_frame.next_state[0] = this->playerPosX;
 	return_frame.next_state[1] = this->playerPosY;	
-
-	if (i >= 100) {
-		i = 0; 
-		return_frame.reward = -2;
-		return_frame.done = true;	
-		// reset player position.
-		this->playerPosX = 1; 
-		this->playerPosY = 4;
-	}	
 	
 	// determine reward
 	if (this->playerPosX == 8 && this->playerPosY == 4) {

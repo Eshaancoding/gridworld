@@ -16,4 +16,5 @@ public:
 	int get_action (vector<double> state); 
 	// update q value and policy
 	void update (vector<double> state, int action, double reward, vector<double> next_state, int next_action);
+	string print_q ();
 };
