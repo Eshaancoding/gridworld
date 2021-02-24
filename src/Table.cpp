@@ -9,7 +9,10 @@ vector<double> TwoDimTable :: get (vector<double> input_one, vector<double> inpu
 			break;
 		}
 	}
-	if (output.size() == 0) throw invalid_argument("input not found");
+	if (output.size() == 0) {
+		this->add(input_one, input_two, {double(0)});
+		return {double(0)};
+	}
 	else return output;
 }
 

@@ -8,6 +8,10 @@ AgentSarsa :: AgentSarsa (int action_size, double gamma, double step_size_param,
 	srand(time(NULL)); 
 } 
 
+void AgentSarsa :: set_exploration (bool exploration) {
+	this->explore = exploration;
+}
+
 int AgentSarsa :: get_action (vector<double> state) {
     int action_return = -numeric_limits<int>::infinity();
     double q_value_return = -numeric_limits<double>::infinity();
@@ -36,7 +40,6 @@ int AgentSarsa :: get_action (vector<double> state) {
             }
             this->predict_status = "GREEDY";
         } else {
-            this->q_value.add(state, {double(i)}, {0});
             q_value_return = 0;
             action_repeats = {i};
             action_return = rand() % this->action_size;
@@ -51,9 +54,9 @@ int AgentSarsa :: get_action (vector<double> state) {
         predict_status = "GREEDY TIES BROKEN RANDOMLY";
     }
 
-    // with random probability e, we choose random action (for exploration)
+    // with random probability e, we choose random action (for exploration)	
     int deciding = rand() % 100;
-    if (deciding <= (this->e_greedy_probability * 100)) {
+    if (deciding <= this->e_greedy_probability && this->explore) {
         // explore
         this->predict_status = "RANDOM BECAUSE OF EXPLORATION";
         return rand() % this->action_size;
@@ -66,15 +69,9 @@ string AgentSarsa :: print_q () {
 	return this->q_value.print_data();
 }
 
-
 void AgentSarsa :: update (vector<double> state, int action, double reward, vector<double> next_state, int next_action) {
 	double q_s_a = this->q_value.get(state, {double(action)})[0]; 
-	double q_future;
-	try {
-		q_future = this->q_value.get(state, {double(action)})[0];
-	} catch (...) {
-		q_future = 0;
-	} 
+	double q_future = this->q_value.get(next_state, {double(next_action)})[0];
 	double set_q = q_s_a + this->step_size_param * (reward + (this->gamma * q_future) - q_s_a);
 	this->q_value.set(state, {double(action)}, {set_q}); 
 }

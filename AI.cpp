@@ -10,7 +10,6 @@ int main () {
 	double step_size_param = 0.5;
 	double e_greedy_probability = 0.1;
 
-	int delay = 2000; 
 	Env env = Env();
 	AgentSarsa agent = AgentSarsa (action_size, gamma, step_size_param, e_greedy_probability); // 4 actions: left, right, down, up
 	vector<double> state ({1,4}); // its the starting state
@@ -24,61 +23,39 @@ int main () {
 		engine.end();	
 	}
 	
-	double last_total_reward = 0;
+	double last_steps;
+	double total_timesteps;
 
 	while (true) {
 		frame fr = env.step(action);
 		vector<double> next_state = {double(fr.next_state[0]), double(fr.next_state[1])};
 		int next_action = agent.get_action(next_state);
 		agent.update (state, action, fr.reward, next_state, next_action);
-		total_reward += fr.reward;
-	
+
 		int key; 
 		if (should_display) key = engine.get_key_pressed();
 		steps++;
+		total_timesteps++;
 
-		if (should_display && key == 'b') break;
-	
+		if (should_display && key == 'b') break;	
+
 		// if episode ends
 		if (fr.done) {
-			last_total_reward = total_reward;
+			last_steps = steps;
 			episode ++;	
 			steps = 0; 
-			total_reward = 0;
 		}
 
 		// display everything
-		if (should_display) {
-			string action_code = "";
-			if (action == 0) action_code = "UP  ";
-			if (action == 1) action_code = "DOWN";
-			if (action == 2) action_code = "LEFT";
-			if (action == 3) action_code = "RIGHT"; 
-			engine.print("Last Total Reward: " + to_string(last_total_reward) + "                            ", 0, 3);
-			engine.print("************", 0, 4);	
-			for (int y = 0; y < 7; y++) {
-				engine.print("*", 0, y+5);
-				for (int x = 0; x < 10; x++) {
-					if (state[0] - 1 == x && state[1] == 7 - y) {
-						engine.print("P", x+1, y+5); 
-					}
-					else if (x == 7  && 7 - y == 4) {
-						engine.print("G", x+1, y+5);
-					}
-					else {
-						engine.print("-", x+1, y+5);
-					}
-				}	
-				engine.print("*", 11, y+5); 
-			}
-			engine.print("************", 0, 12);
-			engine.print("Episodes: " + to_string(episode) + "                               ", 0, 14);
-			engine.print("Steps: " + to_string(steps) + "                               ", 0, 15); 
+		if (should_display) {	
+			engine.print("Episodes: " + to_string(episode) + "                               ", 0, 0);
+			engine.print("Steps: " + to_string(steps) + "                               ", 0, 1); 
+			engine.print("Last total steps: " + to_string(last_steps) + "                          ", 0, 2);
+			engine.print("Total timesteps: " + to_string(total_timesteps) + "               ", 0, 3);
 		}
 		// update action and state
 		state = next_state;
 		action = next_action;
-		engine.wait(delay);
 	}
 	engine.end();
 	cout<<"Program terminated."<<endl;

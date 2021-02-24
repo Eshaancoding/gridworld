@@ -10,6 +10,7 @@ private:
 	double gamma; 
 	TwoDimTable q_value;
 	int action_size;
+	bool explore = true;
 public:
 	string predict_status;
 	AgentSarsa (int action_size, double gamma = 1, double step_size_param = 0.5, double e_greedy_probability = 0.1);
@@ -17,4 +18,5 @@ public:
 	// update q value and policy
 	void update (vector<double> state, int action, double reward, vector<double> next_state, int next_action);
 	string print_q ();
+	void set_exploration (bool exploration);
 };
