@@ -72,12 +72,13 @@ int main () {
 					}	
 					engine.print("*", 11, y+5); 
 				}
+				string clear_space = "                                                               ";
 				engine.print("************", 0, 12);
-				engine.print("Episodes: " + to_string(episode) + "                               ", 0, 14);
-				engine.print("Steps: " + to_string(steps) + "                               ", 0, 15); 
-				engine.print("Explore toggle (Press E): " + to_string(exploration) + "                       ", 0, 16);
-				engine.print("Agent predict status: " + agent.predict_status + "                      ", 0, 17);
-				engine.print("Total timesteps: " + to_string(total_timesteps) + "                      ", 0, 18); 
+				engine.print("Episodes: " + to_string(episode) + clear_space, 0, 14);
+				engine.print("Steps: " + to_string(steps) + clear_space, 0, 15); 
+				engine.print("Explore toggle (Press E): " + to_string(exploration) + clear_space, 0, 16);
+				engine.print("Agent predict status: " + agent.predict_status + clear_space, 0, 17);
+				engine.print("Total timesteps: " + to_string(total_timesteps) + clear_space, 0, 18); 
 			}
 			
 			// update action and state
