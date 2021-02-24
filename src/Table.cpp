@@ -10,10 +10,19 @@ vector<double> TwoDimTable :: get (vector<double> input_one, vector<double> inpu
 		}
 	}
 	if (output.size() == 0) {
-		this->add(input_one, input_two, {double(0)});
-		return {double(0)};
+		double random_number = (rand() % 1000) / double(1000);
+		this->add(input_one, input_two, {random_number});
+		return {random_number};
 	}
 	else return output;
+}
+
+void TwoDimTable :: setup () {
+	srand(time(NULL));
+	this->add({8,4}, {double(0)}, {double(0)});
+	this->add({8,4}, {double(1)}, {double(0)});
+	this->add({8,4}, {double(2)}, {double(0)});
+	this->add({8,4}, {double(3)}, {double(0)});
 }
 
 void TwoDimTable :: set (vector<double> input_one, vector<double> input_two, vector<double> output_one) {

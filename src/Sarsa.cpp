@@ -5,6 +5,7 @@ AgentSarsa :: AgentSarsa (int action_size, double gamma, double step_size_param,
 	this->step_size_param = step_size_param;
 	this->e_greedy_probability = e_greedy_probability;
 	this->gamma = gamma;
+	this->q_value.setup();
 	srand(time(NULL)); 
 } 
 
