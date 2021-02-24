@@ -10,7 +10,7 @@ int main () {
 	double step_size_param = 0.5;
 	double e_greedy_probability = 0.1;
 
-	int delay = 2000; 
+	int delay = 10000; 
 	Env env = Env();
 	AgentSarsa agent = AgentSarsa (action_size, gamma, step_size_param, e_greedy_probability); // 4 actions: left, right, down, up
 	unsigned int episode = 0; 
@@ -25,12 +25,14 @@ int main () {
 	double last_total_reward = 0;
 	bool exploration = true;
 	bool is_done = false;
+	unsigned int total_timesteps = 0;
 
 	while (!is_done) {
 		vector<double> state ({1,4}); // its the starting state
 		int action = agent.get_action(state);
 		
 		while (true) {
+			total_timesteps++;
 			frame fr = env.step(action);
 			vector<double> next_state = {double(fr.next_state[0]), double(fr.next_state[1])};
 			int next_action = agent.get_action(next_state);
@@ -75,6 +77,7 @@ int main () {
 				engine.print("Steps: " + to_string(steps) + "                               ", 0, 15); 
 				engine.print("Explore toggle (Press E): " + to_string(exploration) + "                       ", 0, 16);
 				engine.print("Agent predict status: " + agent.predict_status + "                      ", 0, 17);
+				engine.print("Total timesteps: " + to_string(total_timesteps) + "                      ", 0, 18); 
 			}
 			
 			// update action and state
